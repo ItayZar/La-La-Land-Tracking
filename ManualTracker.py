@@ -4,7 +4,6 @@ import cv2
 import random
 
 # Create a MultiTracker object
-#tracker = cv2.TrackerKCF_create()
 tracker = cv2.legacy_MultiTracker.create()
 
 
@@ -39,7 +38,6 @@ while success:
         # Initialize the tracker with the selected bounding boxes
         for bbox in bboxes:
             tracker.add(cv2.legacy_TrackerKCF.create(), frame, bbox)
-            #tracker.init(frame, bbox)
         break
     # Read a new frame
     success, frame = capture.read()
@@ -50,7 +48,6 @@ while success:
     success, boxes = tracker.update(frame)
 
     # Draw the bounding boxes on the frame
-    #for i, newbox in enumerate(boxes):
     for i,newbox in enumerate(boxes):
         p1 = (int(newbox[0]), int(newbox[1]))
         p2 = (int(newbox[0] + newbox[2]), int(newbox[1] + newbox[3]))
@@ -64,10 +61,7 @@ while success:
     key = cv2.waitKey(1)
     if key == 113:  # 113 is the key 'q'
         break
-
-    # Read a new frame
     success, frame = capture.read()
 
-# Release the capture and close all windows
 capture.release()
 cv2.destroyAllWindows()
